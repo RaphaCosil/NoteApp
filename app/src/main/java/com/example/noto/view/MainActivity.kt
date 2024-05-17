@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.noto.NoteViewModel
 import com.example.noto.data.dto.NoteData
+import com.example.noto.data.remoteRepository.NoteRepositoryImpl
 import com.example.noto.databinding.ActivityMainBinding
+import com.example.noto.domain.useCase.GetAllNotesUseCase
+import com.example.noto.domain.useCase.GetNoteUseCase
+import com.example.noto.domain.useCase.SendNoteUseCase
+import com.example.noto.domain.useCase.UpdateNoteUseCase
 
 class MainActivity : AppCompatActivity() {
     private lateinit var noteViewModel: NoteViewModel
@@ -14,6 +19,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val noteRepositoryImpl = NoteRepositoryImpl()
+
+        val getAllNotesUseCase = GetAllNotesUseCase(noteRepositoryImpl)
+        val getNoteUseCase = GetNoteUseCase(noteRepositoryImpl)
+        val sendNoteUseCase = SendNoteUseCase(noteRepositoryImpl)
+        val updateNoteUseCase = UpdateNoteUseCase(noteRepositoryImpl)
+
+        noteViewModel = NoteViewModel(getAllNotesUseCase, getNoteUseCase, sendNoteUseCase, updateNoteUseCase)
 
         binding.buttonGetAllNotes.setOnClickListener {
 
