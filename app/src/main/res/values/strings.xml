@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Noto</string>
+    <string name="getallnotes">GetAllNotes</string>
+    <string name="getonenote">GetOneNote</string>
+    <string name="sendnote">SendNote</string>
+    <string name="updatenote">UpdateNote</string>
+    <string name="content">Content</string>
+    <string name="id">ID</string>
+    <string name="title">Title</string>
+</resources>
