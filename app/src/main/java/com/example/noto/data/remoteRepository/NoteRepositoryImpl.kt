@@ -1,32 +1,20 @@
 package com.example.noto.data.remoteRepository
 
-import com.example.noto.RetrofitClient
-import com.example.noto.data.api.NoteService
+import com.example.noto.data.service.NoteService
 import com.example.noto.data.dto.NoteData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-class NoteRepositoryImpl: NoteRepository {
-    val path = "caminho/do/mockkon"
-     override suspend fun getNotes(): Flow<List<NoteData>> = flow{
-         val retrofitClient = RetrofitClient.getRetrofitInstance(path)
-         val service = retrofitClient.create(NoteService::class.java)
-         val response = service.getAllNotes()
-         emit(response)
+class NoteRepositoryImpl(private val noteService: NoteService): NoteRepository {
+     override suspend fun getNotes(): Flow<MutableList<NoteData>> = flow {
+         emit(noteService.getAllNotes())
      }
     override suspend fun getNote(noteId: String): Flow<NoteData> = flow {
-        val retrofitClient = RetrofitClient.getRetrofitInstance(path)
-        val service = retrofitClient.create(NoteService::class.java)
-        val response = service.getNote(noteId)
-        emit(response)
+        emit(noteService.getNote(noteId))
     }
     override suspend fun sendNote(note: NoteData) {
-        val retrofitClient = RetrofitClient.getRetrofitInstance(path)
-        val service = retrofitClient.create(NoteService::class.java)
-        service.sendNote(note)
+        noteService.sendNote(note)
     }
     override suspend fun updateNote(noteId: String, note: NoteData) {
-        val retrofitClient = RetrofitClient.getRetrofitInstance(path)
-        val service = retrofitClient.create(NoteService::class.java)
-        service.updateNote(noteId, note)
+        noteService.updateNote(noteId, note)
     }
 }

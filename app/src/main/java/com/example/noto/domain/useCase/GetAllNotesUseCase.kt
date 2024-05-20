@@ -5,10 +5,8 @@ import com.example.noto.data.remoteRepository.NoteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetAllNotesUseCase(
-    private val noteRepository: NoteRepository
-) {
-    suspend operator fun invoke(): Flow<List<NoteData>> = flow {
+class GetAllNotesUseCase(private val noteRepository: NoteRepository) {
+    suspend operator fun invoke(): Flow<MutableList<NoteData>> = flow {
         noteRepository.getNotes().collect { emit(it) }
     }
 
